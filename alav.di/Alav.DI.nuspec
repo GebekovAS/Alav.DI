@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>Alav.DI</id>
+    <version>1.0.0.0</version>
+    <title>Alav.DI</title>
+    <authors>Gebekov Alavutdin S.</authors>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <!-- <icon>icon.png</icon> -->
+    <projectUrl>https://github.com/GebekovAS/Alav.DI</projectUrl>
+    <description>Alav.DI - additional Tools for Working with Dependency Injection</description>
+    <releaseNotes>Init Alav.DI</releaseNotes>
+    <copyright>© Gebekov Alavutdin S., 2022</copyright>
+    <tags>alav.di alav di</tags>
+  </metadata>
+</package>

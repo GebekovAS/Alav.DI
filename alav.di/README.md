@@ -1,10 +1,10 @@
-﻿# Alav.DI
+﻿# Alav.DI [![Build status](https://ci.appveyor.com/api/projects/status/vamv8y7w2lyu7wc3?svg=true)](https://ci.appveyor.com/project/GebekovAS/alav-di) [![NuGet Package](https://img.shields.io/nuget/v/Alav.DI.svg)](https://www.nuget.org/packages/Alav.DI)
 
 > Alav.DI - additional Tools for Working with Dependency Injection
 
 ## Installation
 
-Install the [Scrutor NuGet Package](https://www.nuget.org/packages/Alav.DI).
+Install the [NuGet Package](https://www.nuget.org/packages/Alav.DI).
 
 ### Package Manager Console
 
@@ -31,12 +31,14 @@ See **Examples** below for usage examples.
 ### Scanning
 
 ```csharp
-public interface IPingService
+    public interface IPingService
     {
         void Ping();
     }
-...
-[ADI(ServiceLifetime = Alav.DI.Enums.ADIServiceLifetime.Singleton, Interface = typeof(IPingService))]
+    ...
+    
+    //Annotation for class inclusion in scan results
+    [ADI(ServiceLifetime = Alav.DI.Enums.ADIServiceLifetime.Singleton, Interface = typeof(IPingService))]
     public class PingService : IPingService
     {
         private readonly ILogger<PingService> _logger;
@@ -47,8 +49,8 @@ public interface IPingService
             _logger.LogInformation($"{nameof(PingService)}:Ping");
         }
     }
-...
-var services = new ServiceCollection()
+    ...
+    var services = new ServiceCollection()
                             .AddLogging(opt =>
                             {
                                 opt.AddConsole();
@@ -56,13 +58,6 @@ var services = new ServiceCollection()
                             })
                             .Scan<Program>()
                             .BuildServiceProvider();
-            var pingService = services.GetService<IPingService>();
-            pingService.Ping();
-```
-
-### Decoration
-
-```csharp
-//Annotation for class inclusion in scan results
-[ADI(ServiceLifetime = Alav.DI.Enums.ADIServiceLifetime.Singleton, Interface = typeof(IPingService))]
+    var pingService = services.GetService<IPingService>();
+    pingService.Ping();
 ```
