@@ -36,7 +36,9 @@ See **Examples** below for usage examples.
         void Ping();
     }
     ...
-    
+
+    using Alav.DI.Attributes;
+    ...
     //Annotation for class inclusion in scan results
     [ADI(ServiceLifetime = Alav.DI.Enums.ADIServiceLifetime.Singleton, Interface = typeof(IPingService))]
     public class PingService : IPingService
@@ -50,6 +52,7 @@ See **Examples** below for usage examples.
         }
     }
     ...
+
     var services = new ServiceCollection()
                             .AddLogging(opt =>
                             {
