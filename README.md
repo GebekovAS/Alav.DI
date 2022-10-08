@@ -35,7 +35,7 @@ See **Examples** below for usage examples.
     {
         void Ping();
     }
-...
+    ...
     [ADI(ServiceLifetime = Alav.DI.Enums.ADIServiceLifetime.Singleton, Interface = typeof(IPingService))]
     public class PingService : IPingService
     {
@@ -47,7 +47,7 @@ See **Examples** below for usage examples.
             _logger.LogInformation($"{nameof(PingService)}:Ping");
         }
     }
-...
+    ...
     var services = new ServiceCollection()
                             .AddLogging(opt =>
                             {
