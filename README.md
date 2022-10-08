@@ -42,12 +42,9 @@ See **Examples** below for usage examples.
     [ADI(ServiceLifetime = Alav.DI.Enums.ADIServiceLifetime.Singleton, Interface = typeof(IPingService))]
     public class PingService : IPingService
     {
-        private readonly ILogger<PingService> _logger;
-        public PingService(ILogger<PingService> logger) => _logger = logger;
-
         public void Ping()
         {
-            _logger.LogInformation($"{nameof(PingService)}:Ping");
+            Console.WriteLine($"{nameof(PingService)}:Ping");
         }
     }
     ...
@@ -55,11 +52,6 @@ See **Examples** below for usage examples.
     using Alav.DI.Extensions;
     ...
     var services = new ServiceCollection()
-                            .AddLogging(opt =>
-                            {
-                                opt.AddConsole();
-                                opt.AddJsonConsole();
-                            })
                             .Scan<Program>()
                             .BuildServiceProvider();
     var pingService = services.GetService<IPingService>();
