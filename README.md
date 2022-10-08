@@ -36,6 +36,8 @@ See **Examples** below for usage examples.
         void Ping();
     }
     ...
+    
+    //Annotation for class inclusion in scan results
     [ADI(ServiceLifetime = Alav.DI.Enums.ADIServiceLifetime.Singleton, Interface = typeof(IPingService))]
     public class PingService : IPingService
     {
@@ -56,13 +58,6 @@ See **Examples** below for usage examples.
                             })
                             .Scan<Program>()
                             .BuildServiceProvider();
-            var pingService = services.GetService<IPingService>();
-            pingService.Ping();
-```
-
-### Decoration
-
-```csharp
-//Annotation for class inclusion in scan results
-[ADI(ServiceLifetime = Alav.DI.Enums.ADIServiceLifetime.Singleton, Interface = typeof(IPingService))]
+    var pingService = services.GetService<IPingService>();
+    pingService.Ping();
 ```
