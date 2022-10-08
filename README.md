@@ -31,12 +31,12 @@ See **Examples** below for usage examples.
 ### Scanning
 
 ```csharp
-public interface IPingService
+    public interface IPingService
     {
         void Ping();
     }
-...
-[ADI(ServiceLifetime = Alav.DI.Enums.ADIServiceLifetime.Singleton, Interface = typeof(IPingService))]
+    ...
+    [ADI(ServiceLifetime = Alav.DI.Enums.ADIServiceLifetime.Singleton, Interface = typeof(IPingService))]
     public class PingService : IPingService
     {
         private readonly ILogger<PingService> _logger;
@@ -47,8 +47,8 @@ public interface IPingService
             _logger.LogInformation($"{nameof(PingService)}:Ping");
         }
     }
-...
-var services = new ServiceCollection()
+    ...
+    var services = new ServiceCollection()
                             .AddLogging(opt =>
                             {
                                 opt.AddConsole();
