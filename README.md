@@ -4,7 +4,7 @@
 
 ## Installation
 
-Install the [Scrutor NuGet Package](https://www.nuget.org/packages/Alav.DI).
+Install the [NuGet Package](https://www.nuget.org/packages/Alav.DI).
 
 ### Package Manager Console
 
