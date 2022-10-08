@@ -5,7 +5,7 @@ using System.Text;
 namespace Alav.DI.Enums
 {
     /// <summary>
-    /// 
+    /// Enum - Service lifetime
     /// </summary>
     public enum ADIServiceLifetime
     {
