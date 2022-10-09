@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Alav.DI</id>
-    <version>1.0.0.0</version>
+    <version>1.0.2.0</version>
     <title>Alav.DI</title>
     <authors>Gebekov Alavutdin S.</authors>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
@@ -10,7 +10,7 @@
     <!-- <icon>icon.png</icon> -->
     <projectUrl>https://github.com/GebekovAS/Alav.DI</projectUrl>
     <description>Alav.DI - additional Tools for Working with Dependency Injection</description>
-    <releaseNotes>Init Alav.DI</releaseNotes>
+    <releaseNotes>Added injection of inheritors of abstract classes and interfaces</releaseNotes>
     <copyright>© Gebekov Alavutdin S., 2022</copyright>
     <tags>alav.di alav di</tags>
   </metadata>

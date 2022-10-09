@@ -1,6 +1,8 @@
 ﻿using Alav.DI.Attributes;
+using Alav.DI.Enums;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -39,52 +41,95 @@ namespace Alav.DI.Extensions
 
         private static IServiceCollection ScanAssembly(this IServiceCollection services, Assembly assembly, Func<Type,bool>? expression = null)
         {
+            Dictionary<Type, IEnumerable<ADIAttribute>> processedTypes = new Dictionary<Type, IEnumerable<ADIAttribute>>();
+            Action<Type, IEnumerable<ADIAttribute>> tryAddTypeAttributesAction = (type, attributes) =>
+            {
+                if (!processedTypes.ContainsKey(type))
+                {
+                    processedTypes.Add(type, attributes);
+                }
+            };
+
             assembly
                 .GetTypes()
                 .Where(item => item.GetCustomAttributes<ADIAttribute>().Any() && (expression == null || expression(item)))
                 .ToList()
-                .ForEach(assemblyType =>
+                .ForEach(serviceType =>
                 {
-                    var attrs = assemblyType.GetCustomAttributes<ADIAttribute>();
-                    foreach (var attr in attrs)
+                    var attrs = serviceType.GetCustomAttributes<ADIAttribute>();
+
+                    if (processedTypes.ContainsKey(serviceType))
                     {
-                        switch (attr.ServiceLifetime)
+                        return;
+                    }
+
+                    if (serviceType.IsAbstract || serviceType.IsInterface)
+                    {
+                        var inheritedTypes = GetInheritedClasses(serviceType);
+                        foreach (var inheritedType in inheritedTypes)
                         {
-                            case Enums.ADIServiceLifetime.Singleton:
-                                if (attr.Interface != null)
-                                {
-                                    services.AddSingleton(attr.Interface, assemblyType);
-                                }
-                                else
-                                {
-                                    services.AddSingleton(assemblyType);
-                                }
-                                break;
-                            case Enums.ADIServiceLifetime.Transient:
-                                if (attr.Interface != null)
-                                {
-                                    services.AddTransient(attr.Interface, assemblyType);
-                                }
-                                else
-                                {
-                                    services.AddTransient(assemblyType);
-                                }
-                                break;
-                            case Enums.ADIServiceLifetime.Scoped:
-                                if (attr.Interface != null)
-                                {
-                                    services.AddScoped(attr.Interface, assemblyType);
-                                }
-                                else
-                                {
-                                    services.AddScoped(assemblyType);
-                                }
-                                break;
+                            tryAddTypeAttributesAction(inheritedType, attrs);
                         }
+                    }
+                    else
+                    {
+                        tryAddTypeAttributesAction(serviceType, attrs);
                     }
                 });
 
+
+
+            foreach (var type in processedTypes)
+            {
+                foreach (var attr in type.Value)
+                {
+                    services.AddService(type.Key, attr.ServiceLifetime, attr.Interface);
+                }
+            }
+
             return services;
+        }
+
+        private static void AddService(this IServiceCollection services, Type serviceType, ADIServiceLifetime serviceLifetime, Type? interfaceType = null)
+        {
+            switch (serviceLifetime)
+            {
+                case Enums.ADIServiceLifetime.Singleton:
+                    if (interfaceType != null)
+                    {
+                        services.AddSingleton(interfaceType, serviceType);
+                    }
+                    else
+                    {
+                        services.AddSingleton(serviceType);
+                    }
+                    break;
+                case Enums.ADIServiceLifetime.Transient:
+                    if (interfaceType != null)
+                    {
+                        services.AddTransient(interfaceType, serviceType);
+                    }
+                    else
+                    {
+                        services.AddTransient(serviceType);
+                    }
+                    break;
+                case Enums.ADIServiceLifetime.Scoped:
+                    if (interfaceType != null)
+                    {
+                        services.AddScoped(interfaceType, serviceType);
+                    }
+                    else
+                    {
+                        services.AddScoped(serviceType);
+                    }
+                    break;
+            }
+        }
+
+        static IEnumerable<Type> GetInheritedClasses(Type baseType)
+        {
+            return baseType.Assembly.GetTypes().Where(type => type.IsClass && !type.IsAbstract && (type.IsSubclassOf(baseType) || baseType.IsAssignableFrom(type)));
         }
     }
 }
