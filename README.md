@@ -1,6 +1,6 @@
-﻿# Alav.DI [![Build status](https://ci.appveyor.com/api/projects/status/vamv8y7w2lyu7wc3?svg=true)](https://ci.appveyor.com/project/GebekovAS/alav-di) [![NuGet Package](https://img.shields.io/nuget/v/Alav.DI.svg)](https://www.nuget.org/packages/Alav.DI)
+﻿# Alav.DI [![Build status](https://ci.appveyor.com/api/projects/status/vamv8y7w2lyu7wc3?svg=true)](https://ci.appveyor.com/project/GebekovAS/alav-di) [![NuGet Package](https://img.shields.io/nuget/v/Alav.DI.svg?v=1.0.2)](https://www.nuget.org/packages/Alav.DI)
 
-> Alav.DI - additional Tools for Working with Dependency Injection (v1.0.2)
+> Alav.DI - additional Tools for Working with Dependency Injection
 
 ## Installation
 
