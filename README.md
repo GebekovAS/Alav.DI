@@ -22,7 +22,7 @@ dotnet add package Alav.DI
 
 The library adds extension method to `IServiceCollection`:
 
-* `Scan` - This is the entry point to set up your assembly scanning.
+* `Scan` - This is the entry point to set up your assembly scanning. The tool allows you to inject service dependencies using annotations. This will allow you to set the lifetime, for example, directly in the service class itself. If you set the lifetime for an interface or an abstract class, then it will be applied automatically to all descendants.
 
 See **Examples** below for usage examples.
 
