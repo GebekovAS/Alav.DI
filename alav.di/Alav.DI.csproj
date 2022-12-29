@@ -5,7 +5,7 @@
     <Title>Alav.DI</Title>
     <Copyright>© Gebekov Alavutdin S., 2022</Copyright>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Description>Additional tools for working with Dependency Injection</Description>
+    <Description>Add the ability to specify an interface through a generic attribute. Added attribute ADIInject for injection of dependencies without explicit specification in the constructor.</Description>
     <PackageProjectUrl>https://alav.online</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryType>git</RepositoryType>
@@ -15,6 +15,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <RepositoryUrl>https://github.com/GebekovAS/Alav.DI</RepositoryUrl>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

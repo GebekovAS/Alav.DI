@@ -10,7 +10,9 @@
     <!-- <icon>icon.png</icon> -->
     <projectUrl>https://github.com/GebekovAS/Alav.DI</projectUrl>
     <description>Alav.DI - additional Tools for Working with Dependency Injection</description>
-    <releaseNotes>Add dependency injection attribute without constructor</releaseNotes>
+    <releaseNotes>
+		Add the ability to specify an interface through a generic attribute. Added attribute ADIInject for injection of dependencies without explicit specification in the constructor
+	</releaseNotes>
     <copyright>© Gebekov Alavutdin S., 2022</copyright>
     <tags>alav.di alav di</tags>
   </metadata>
