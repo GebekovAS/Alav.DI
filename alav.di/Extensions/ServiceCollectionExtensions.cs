@@ -21,7 +21,7 @@ namespace Alav.DI.Extensions
         /// <returns>ServiceCollection</returns>
         public static IServiceCollection Scan(this IServiceCollection services, Func<Type, bool>? expression = null)
         {
-            foreach (var assemply in AppDomain.CurrentDomain.GetAssemblies()) 
+            foreach (var assemply in AppDomain.CurrentDomain.GetAssemblies())
             {
                 services = services.ScanAssembly(assemply, expression);
             }
@@ -39,7 +39,7 @@ namespace Alav.DI.Extensions
         /// <returns>ServiceCollection</returns>
         public static IServiceCollection Scan<T>(this IServiceCollection services, Func<Type, bool>? expression = null) => services.ScanAssembly(typeof(T).Assembly, expression);
 
-        private static IServiceCollection ScanAssembly(this IServiceCollection services, Assembly assembly, Func<Type,bool>? expression = null)
+        private static IServiceCollection ScanAssembly(this IServiceCollection services, Assembly assembly, Func<Type, bool>? expression = null)
         {
             Dictionary<Type, IEnumerable<ADIAttribute>> processedTypes = new Dictionary<Type, IEnumerable<ADIAttribute>>();
             Action<Type, IEnumerable<ADIAttribute>> tryAddTypeAttributesAction = (type, attributes) =>
@@ -97,37 +97,70 @@ namespace Alav.DI.Extensions
                 case Enums.ADIServiceLifetime.Singleton:
                     if (interfaceType != null)
                     {
-                        services.AddSingleton(interfaceType, serviceType);
+                        services.AddSingleton(interfaceType, sp => CreateInstance(sp, serviceType));
                     }
                     else
                     {
-                        services.AddSingleton(serviceType);
+                        services.AddSingleton(serviceType, sp => CreateInstance(sp, serviceType));
                     }
                     break;
                 case Enums.ADIServiceLifetime.Transient:
                     if (interfaceType != null)
                     {
-                        services.AddTransient(interfaceType, serviceType);
+                        services.AddTransient(interfaceType, sp => CreateInstance(sp, serviceType));
                     }
                     else
                     {
-                        services.AddTransient(serviceType);
+                        services.AddTransient(serviceType, sp => CreateInstance(sp, serviceType));
                     }
                     break;
                 case Enums.ADIServiceLifetime.Scoped:
                     if (interfaceType != null)
                     {
-                        services.AddScoped(interfaceType, serviceType);
+                        services.AddScoped(interfaceType, sp => CreateInstance(sp, serviceType));
                     }
                     else
                     {
-                        services.AddScoped(serviceType);
+                        services.AddScoped(serviceType, sp => CreateInstance(sp, serviceType));
                     }
                     break;
             }
         }
 
-        static IEnumerable<Type> GetInheritedClasses(Type baseType)
+        #region Add
+
+        private static object CreateInstance(IServiceProvider provider, Type serviceType)
+        {
+            var constructor = serviceType
+                                .GetConstructors()
+                                .FirstOrDefault();
+
+            var constructorParams = constructor.GetParameters();
+            var args = new object[constructorParams.Length];
+            for (var index = 0; index < constructorParams.Length; index++)
+            {
+                args[index] = provider.GetService(constructorParams[index].ParameterType);
+            }
+
+            var instance = Assembly
+                .GetAssembly(serviceType)
+                .CreateInstance(serviceType.FullName, true, BindingFlags.Instance | BindingFlags.Public, null, args, null, null);
+
+            var fields = serviceType.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)
+                            .Where(field => field.GetCustomAttribute<ADIInjectAttribute>() != null);
+            foreach (var field in fields)
+            {
+                var fieldInstance = provider.GetService(field.FieldType);
+                field.SetValue(instance, fieldInstance);
+            }
+
+
+            return instance;
+        }
+
+        #endregion
+
+        private static IEnumerable<Type> GetInheritedClasses(Type baseType)
         {
             return baseType.Assembly.GetTypes().Where(type => type.IsClass && !type.IsAbstract && (type.IsSubclassOf(baseType) || baseType.IsAssignableFrom(type)));
         }

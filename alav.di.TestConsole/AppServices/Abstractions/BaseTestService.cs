@@ -1,7 +1,4 @@
 ﻿using Alav.DI.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Alav.DI.TestConsole.AppServices.Abstractions
 {

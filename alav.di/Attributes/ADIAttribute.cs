@@ -8,7 +8,7 @@ namespace Alav.DI.Attributes
     /// <summary>
     /// Attribute for class inclusion in scan results
     /// </summary>
-    public class ADIAttribute: Attribute
+    public class ADIAttribute : Attribute
     {
         /// <summary>
         /// Service lifetime (Singleton, Transient ...)
@@ -19,5 +19,13 @@ namespace Alav.DI.Attributes
         /// Service interface (DI)
         /// </summary>
         public Type? Interface { get; set; }
+    }
+
+    public class ADIAttribute<T> : ADIAttribute
+    {
+        public ADIAttribute()
+        {
+            Interface = typeof(T);
+        }
     }
 }

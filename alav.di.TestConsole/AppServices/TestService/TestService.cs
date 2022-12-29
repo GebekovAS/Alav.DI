@@ -2,22 +2,17 @@
 using Alav.DI.Enums;
 using ConsoleTest.AppServices.PingService;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ConsoleTest.AppServices.TestService
 {
     [ADI(ServiceLifetime = ADIServiceLifetime.Scoped, Interface = typeof(ITestService))]
     public class TestService : ITestService
     {
+        [ADIInject]
         private readonly ILogger<TestService> _logger;
+
+        [ADIInject]
         private readonly IPingService _pingService;
-        public TestService(ILogger<TestService> logger, IPingService pingService)
-        {
-            _logger = logger;
-            _pingService = pingService;
-        }
 
         public void Ping()
         {
