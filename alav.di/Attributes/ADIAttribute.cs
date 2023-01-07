@@ -20,12 +20,4 @@ namespace Alav.DI.Attributes
         /// </summary>
         public Type? Interface { get; set; }
     }
-
-    public class ADIAttribute<T> : ADIAttribute
-    {
-        public ADIAttribute()
-        {
-            Interface = typeof(T);
-        }
-    }
 }

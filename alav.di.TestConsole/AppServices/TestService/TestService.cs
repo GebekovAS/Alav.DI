@@ -11,8 +11,12 @@ namespace ConsoleTest.AppServices.TestService
         [ADIInject]
         private readonly ILogger<TestService> _logger;
 
-        [ADIInject]
         private readonly IPingService _pingService;
+
+        public TestService(IPingService pingService)
+        {
+            _pingService = pingService;
+        }
 
         public void Ping()
         {

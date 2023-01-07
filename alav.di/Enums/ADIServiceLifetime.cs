@@ -1,4 +1,6 @@
-﻿namespace Alav.DI.Enums
+﻿using System;
+
+namespace Alav.DI.Enums
 {
     /// <summary>
     /// Enum - Service lifetime
