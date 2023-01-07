@@ -20,9 +20,11 @@ namespace ConsoleTest
                             })
                             .Scan<Program>()
                             .BuildServiceProvider();
-            var testService = services.GetService<ITestService>();
-            testService.Ping();
 
+            var testService1 = services.GetService<ITestService>();
+            testService1.Ping();
+            var testService2 = services.GetService<TestService>();
+            testService2.Ping();
             var testServiceA = services.GetService<InheritanceService>();
             testServiceA.Test();
             var testServiceB = services.GetService<TestServiceB>();

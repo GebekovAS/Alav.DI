@@ -38,11 +38,11 @@ See **Examples** below for usage examples.
     ...
     
     //Annotation for class inclusion in scan results
-    [ADI(ServiceLifetime = Alav.DI.Enums.ADIServiceLifetime.Singleton, Interface = typeof(IPingService))]
+    [ADI(Alav.DI.Enums.ADIServiceLifetime.Singleton, typeof(IPingService))]
     public class PingService : IPingService
     {
+        [ADIInject]
         private readonly ILogger<PingService> _logger;
-        public PingService(ILogger<PingService> logger) => _logger = logger;
 
         public void Ping()
         {

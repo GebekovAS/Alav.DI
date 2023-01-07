@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ConsoleTest.AppServices.TestService
 {
-    [ADI(ServiceLifetime = ADIServiceLifetime.Scoped, Interface = typeof(ITestService))]
+    [ADI(ADIServiceLifetime.Scoped,  typeof(ITestService), typeof(TestService))]
     public class TestService : ITestService
     {
         [ADIInject]

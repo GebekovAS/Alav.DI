@@ -96,13 +96,43 @@ namespace Alav.DI.Extensions
             switch (attributes.ServiceLifetime)
             {
                 case Enums.ADIServiceLifetime.Singleton:
-                    services.AddSingleton(attributes.Interface ?? serviceType, sp => CreateInstance(sp, serviceType));
+                    if (attributes.ServiceTypes?.Any() ?? false)
+                    {
+                        foreach (var customServiceType in attributes.ServiceTypes)
+                        {
+                            services.AddSingleton(customServiceType, sp => CreateInstance(sp, serviceType));
+                        }
+                    }
+                    else
+                    {
+                        services.AddSingleton(serviceType, sp => CreateInstance(sp, serviceType));
+                    }
                     break;
                 case Enums.ADIServiceLifetime.Transient:
-                    services.AddTransient(attributes.Interface ?? serviceType, sp => CreateInstance(sp, serviceType));
+                    if (attributes.ServiceTypes?.Any() ?? false)
+                    {
+                        foreach (var customServiceType in attributes.ServiceTypes)
+                        {
+                            services.AddTransient(customServiceType, sp => CreateInstance(sp, serviceType));
+                        }
+                    }
+                    else
+                    {
+                        services.AddTransient(serviceType, sp => CreateInstance(sp, serviceType));
+                    }
                     break;
                 case Enums.ADIServiceLifetime.Scoped:
-                    services.AddScoped(attributes.Interface ?? serviceType, sp => CreateInstance(sp, serviceType));
+                    if (attributes.ServiceTypes?.Any() ?? false)
+                    {
+                        foreach (var customServiceType in attributes.ServiceTypes)
+                        {
+                            services.AddScoped(customServiceType, sp => CreateInstance(sp, serviceType));
+                        }
+                    }
+                    else
+                    {
+                        services.AddScoped(serviceType, sp => CreateInstance(sp, serviceType));
+                    }
                     break;
             }
         }

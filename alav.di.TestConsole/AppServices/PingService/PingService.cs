@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ConsoleTest.AppServices.PingService
 {
-    [ADI(ServiceLifetime = Alav.DI.Enums.ADIServiceLifetime.Singleton, Interface = typeof(IPingService))]
+    [ADI(Alav.DI.Enums.ADIServiceLifetime.Singleton,typeof(IPingService))]
     public class PingService : IPingService
     {
         private readonly ILogger<PingService> _logger;

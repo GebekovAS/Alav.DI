@@ -1,4 +1,5 @@
 ﻿using Alav.DI.Enums;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,14 +11,19 @@ namespace Alav.DI.Attributes
     /// </summary>
     public class ADIAttribute : Attribute
     {
+        public ADIAttribute(ADIServiceLifetime serviceLifetime, params Type[] serviceType)
+        {
+            ServiceLifetime = serviceLifetime;
+            ServiceTypes = serviceType;
+        }
         /// <summary>
         /// Service lifetime (Singleton, Transient ...)
         /// </summary>
         public ADIServiceLifetime ServiceLifetime { get; set; }
 
         /// <summary>
-        /// Service interface (DI)
+        /// Service type (DI)
         /// </summary>
-        public Type? Interface { get; set; }
+        public Type[] ServiceTypes { get; set; }
     }
 }

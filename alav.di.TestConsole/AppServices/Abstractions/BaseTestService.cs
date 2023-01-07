@@ -2,7 +2,7 @@
 
 namespace Alav.DI.TestConsole.AppServices.Abstractions
 {
-    [ADI(ServiceLifetime = Enums.ADIServiceLifetime.Singleton)]
+    [ADI(Enums.ADIServiceLifetime.Singleton)]
     public abstract class BaseTestService
     {
         public abstract void Test();
