@@ -1,6 +1,5 @@
 ﻿using Alav.DI.Extensions;
 using Alav.DI.TestConsole.AppServices.Implementations;
-using Alav.DI.TestConsole.AppServices.TestDI;
 using ConsoleTest.AppServices.PingService;
 using ConsoleTest.AppServices.TestService;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,17 +20,17 @@ namespace ConsoleTest
                             })
                             .Scan<Program>()
                             .BuildServiceProvider();
-            var testService = services.GetService<ITestService>();
-            testService.Ping();
 
-            var testServiceA = services.GetService<TestServiceA>();
+            var testService1 = services.GetService<ITestService>();
+            testService1.Ping();
+            var testService2 = services.GetService<TestService>();
+            testService2.Ping();
+            var testServiceA = services.GetService<InheritanceService>();
             testServiceA.Test();
             var testServiceB = services.GetService<TestServiceB>();
             testServiceB.Test();
             var testServiceC = services.GetService<TestServiceC>();
             testServiceC.Test();
-            var testServiceD = services.GetService<ITestServiceD>();
-            testServiceD.Test();
 
             Console.ReadKey();
 

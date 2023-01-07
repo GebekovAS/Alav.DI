@@ -1,6 +1,7 @@
 ﻿using Alav.DI.Attributes;
 using Alav.DI.Enums;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -83,21 +84,24 @@ namespace Alav.DI.Extensions
             {
                 foreach (var attr in type.Value)
                 {
-                    services.AddService(type.Key, attr.ServiceLifetime, attr.Interface);
+                    services.AddService(type.Key, attr);
                 }
             }
 
             return services;
         }
 
-        private static void AddService(this IServiceCollection services, Type serviceType, ADIServiceLifetime serviceLifetime, Type? interfaceType = null)
+        private static void AddService(this IServiceCollection services, Type serviceType, ADIAttribute attributes)
         {
-            switch (serviceLifetime)
+            switch (attributes.ServiceLifetime)
             {
                 case Enums.ADIServiceLifetime.Singleton:
-                    if (interfaceType != null)
+                    if (attributes.ServiceTypes?.Any() ?? false)
                     {
-                        services.AddSingleton(interfaceType, sp => CreateInstance(sp, serviceType));
+                        foreach (var customServiceType in attributes.ServiceTypes)
+                        {
+                            services.AddSingleton(customServiceType, sp => CreateInstance(sp, serviceType));
+                        }
                     }
                     else
                     {
@@ -105,9 +109,12 @@ namespace Alav.DI.Extensions
                     }
                     break;
                 case Enums.ADIServiceLifetime.Transient:
-                    if (interfaceType != null)
+                    if (attributes.ServiceTypes?.Any() ?? false)
                     {
-                        services.AddTransient(interfaceType, sp => CreateInstance(sp, serviceType));
+                        foreach (var customServiceType in attributes.ServiceTypes)
+                        {
+                            services.AddTransient(customServiceType, sp => CreateInstance(sp, serviceType));
+                        }
                     }
                     else
                     {
@@ -115,9 +122,12 @@ namespace Alav.DI.Extensions
                     }
                     break;
                 case Enums.ADIServiceLifetime.Scoped:
-                    if (interfaceType != null)
+                    if (attributes.ServiceTypes?.Any() ?? false)
                     {
-                        services.AddScoped(interfaceType, sp => CreateInstance(sp, serviceType));
+                        foreach (var customServiceType in attributes.ServiceTypes)
+                        {
+                            services.AddScoped(customServiceType, sp => CreateInstance(sp, serviceType));
+                        }
                     }
                     else
                     {

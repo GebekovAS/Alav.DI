@@ -5,14 +5,18 @@ using Microsoft.Extensions.Logging;
 
 namespace ConsoleTest.AppServices.TestService
 {
-    [ADI(ServiceLifetime = ADIServiceLifetime.Scoped, Interface = typeof(ITestService))]
+    [ADI(ADIServiceLifetime.Scoped,  typeof(ITestService), typeof(TestService))]
     public class TestService : ITestService
     {
         [ADIInject]
         private readonly ILogger<TestService> _logger;
 
-        [ADIInject]
         private readonly IPingService _pingService;
+
+        public TestService(IPingService pingService)
+        {
+            _pingService = pingService;
+        }
 
         public void Ping()
         {
