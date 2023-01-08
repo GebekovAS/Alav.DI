@@ -1,4 +1,4 @@
-﻿# Alav.DI [![Build status](https://ci.appveyor.com/api/projects/status/vamv8y7w2lyu7wc3?svg=true)](https://ci.appveyor.com/project/GebekovAS/alav-di) [![NuGet Package](https://img.shields.io/nuget/v/Alav.DI.svg?v=1.0.5)](https://www.nuget.org/packages/Alav.DI)
+﻿# Alav.DI [![Build status](https://ci.appveyor.com/api/projects/status/vamv8y7w2lyu7wc3?svg=true)](https://ci.appveyor.com/project/GebekovAS/alav-di) [![NuGet Package](https://img.shields.io/nuget/v/Alav.DI.svg?v=1.0.6)](https://www.nuget.org/packages/Alav.DI)
 
 > Alav.DI - additional Tools for Working with Dependency Injection. The tool allows you to inject service dependencies using annotations. This will allow you to set the lifetime, for example, directly in the service class itself. If you set the lifetime for an interface or an abstract class, then it will be applied automatically to all descendants.
 
