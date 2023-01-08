@@ -22,6 +22,11 @@ namespace Alav.DI.Extensions
         /// <returns>ServiceCollection</returns>
         public static IServiceCollection Scan(this IServiceCollection services, Func<Type, bool>? expression = null)
         {
+            AppDomain.CurrentDomain.AssemblyLoad += (sender, args) =>
+            {
+                services.ScanAssembly(args.LoadedAssembly);
+            };
+
             foreach (var assemply in AppDomain.CurrentDomain.GetAssemblies())
             {
                 services = services.ScanAssembly(assemply, expression);
@@ -100,12 +105,12 @@ namespace Alav.DI.Extensions
                     {
                         foreach (var customServiceType in attributes.ServiceTypes)
                         {
-                            services.AddSingleton(customServiceType, sp => CreateInstance(sp, serviceType));
+                            services.TryAddSingleton(customServiceType, sp => CreateInstance(sp, serviceType));
                         }
                     }
                     else
                     {
-                        services.AddSingleton(serviceType, sp => CreateInstance(sp, serviceType));
+                        services.TryAddSingleton(serviceType, sp => CreateInstance(sp, serviceType));
                     }
                     break;
                 case Enums.ADIServiceLifetime.Transient:
@@ -113,12 +118,12 @@ namespace Alav.DI.Extensions
                     {
                         foreach (var customServiceType in attributes.ServiceTypes)
                         {
-                            services.AddTransient(customServiceType, sp => CreateInstance(sp, serviceType));
+                            services.TryAddTransient(customServiceType, sp => CreateInstance(sp, serviceType));
                         }
                     }
                     else
                     {
-                        services.AddTransient(serviceType, sp => CreateInstance(sp, serviceType));
+                        services.TryAddTransient(serviceType, sp => CreateInstance(sp, serviceType));
                     }
                     break;
                 case Enums.ADIServiceLifetime.Scoped:
@@ -126,12 +131,12 @@ namespace Alav.DI.Extensions
                     {
                         foreach (var customServiceType in attributes.ServiceTypes)
                         {
-                            services.AddScoped(customServiceType, sp => CreateInstance(sp, serviceType));
+                            services.TryAddScoped(customServiceType, sp => CreateInstance(sp, serviceType));
                         }
                     }
                     else
                     {
-                        services.AddScoped(serviceType, sp => CreateInstance(sp, serviceType));
+                        services.TryAddScoped(serviceType, sp => CreateInstance(sp, serviceType));
                     }
                     break;
             }
@@ -149,7 +154,7 @@ namespace Alav.DI.Extensions
             var args = new object[constructorParams.Length];
             for (var index = 0; index < constructorParams.Length; index++)
             {
-                args[index] = provider.GetService(constructorParams[index].ParameterType);
+                args[index] = provider.GetRequiredService(constructorParams[index].ParameterType);
             }
 
             var instance = Assembly
@@ -160,7 +165,7 @@ namespace Alav.DI.Extensions
                             .Where(field => field.GetCustomAttribute<ADIInjectAttribute>() != null);
             foreach (var field in fields)
             {
-                var fieldInstance = provider.GetService(field.FieldType);
+                var fieldInstance = provider.GetRequiredService(field.FieldType);
                 field.SetValue(instance, fieldInstance);
             }
 

@@ -5,17 +5,18 @@
     <Title>Alav.DI</Title>
     <Copyright>© Gebekov Alavutdin S., 2022</Copyright>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Description>Add the ability to specify an interface through a generic attribute. Added attribute ADIInject for injection of dependencies without explicit specification in the constructor.</Description>
+    <Description>Alav.DI - additional Tools for Working with Dependency Injection. The tool allows you to inject service dependencies using annotations. This will allow you to set the lifetime, for example, directly in the service class itself. If you set the lifetime for an interface or an abstract class, then it will be applied automatically to all descendants.</Description>
     <PackageProjectUrl>https://alav.online</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryType>git</RepositoryType>
     <PackageTags>alav.di,alav,di</PackageTags>
-    <AssemblyVersion>1.0.3.0</AssemblyVersion>
-    <FileVersion>1.0.3.0</FileVersion>
+    <AssemblyVersion>1.0.6.0</AssemblyVersion>
+    <FileVersion>1.0.6.0</FileVersion>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <RepositoryUrl>https://github.com/GebekovAS/Alav.DI</RepositoryUrl>
-    <Version>1.0.4</Version>
+    <Version>1.0.6</Version>
+    <PackageReleaseNotes>Fixed search in postloaded assemblies</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

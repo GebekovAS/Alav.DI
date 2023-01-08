@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Alav.DI</id>
-    <version>1.0.4.0</version>
+    <version>1.0.5.0</version>
     <title>Alav.DI</title>
     <authors>Gebekov Alavutdin S.</authors>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
@@ -11,7 +11,7 @@
     <projectUrl>https://github.com/GebekovAS/Alav.DI</projectUrl>
     <description>Alav.DI - additional Tools for Working with Dependency Injection</description>
     <releaseNotes>
-		Add the ability to specify an interface through a generic attribute. Added attribute ADIInject for injection of dependencies without explicit specification in the constructor
+		Fixed search in postloaded assemblies
 	</releaseNotes>
     <copyright>© Gebekov Alavutdin S., 2022</copyright>
     <tags>alav.di alav di</tags>
