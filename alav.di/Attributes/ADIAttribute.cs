@@ -1,7 +1,9 @@
 ﻿using Alav.DI.Enums;
+using Alav.DI.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Alav.DI.Attributes
@@ -16,6 +18,7 @@ namespace Alav.DI.Attributes
             ServiceLifetime = serviceLifetime;
             ServiceTypes = serviceType;
         }
+
         /// <summary>
         /// Service lifetime (Singleton, Transient ...)
         /// </summary>
