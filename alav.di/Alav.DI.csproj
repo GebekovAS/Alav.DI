@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Title>Alav.DI</Title>
     <Copyright>© Gebekov Alavutdin S., 2022</Copyright>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
