@@ -16,8 +16,7 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <RepositoryUrl>https://github.com/GebekovAS/Alav.DI</RepositoryUrl>
     <Version>1.0.9</Version>
-    <PackageReleaseNotes>Add ignore ReflectionTypeLoadException
-.NET Core 6.0 -&gt; 3.1</PackageReleaseNotes>
+    <PackageReleaseNotes>Add ignore ReflectionTypeLoadException</PackageReleaseNotes>
 	<ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
@@ -36,6 +35,8 @@
   <ItemGroup>
     <None Update="README.md">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
 
