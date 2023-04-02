@@ -10,8 +10,10 @@ namespace Alav.DI.TestConsole.AppServices.Implementations
     /// </summary>
     public class InheritanceService : BaseTestService
     {
+#pragma warning disable 0649
         [ADIInject]
         private IPingService _pingService;
+#pragma warning restore 0649
 
         public override void Test()
         {

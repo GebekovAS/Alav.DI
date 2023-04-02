@@ -8,8 +8,12 @@ namespace ConsoleTest.AppServices.TestService
     [ADI(ADIServiceLifetime.Scoped,  typeof(ITestService), typeof(TestService))]
     public class TestService : ITestService
     {
+#pragma warning disable 0649
+
         [ADIInject]
         private readonly ILogger<TestService> _logger;
+
+#pragma warning restore 0649
 
         private readonly IPingService _pingService;
 

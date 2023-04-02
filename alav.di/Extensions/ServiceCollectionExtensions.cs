@@ -20,7 +20,7 @@ namespace Alav.DI.Extensions
         /// <param name="services">Service collection</param>
         /// <param name="expression">Search expression</param>
         /// <returns>ServiceCollection</returns>
-        public static IServiceCollection Scan(this IServiceCollection services, Func<Type, bool>? expression = null)
+        public static IServiceCollection Scan(this IServiceCollection services, Func<Type, bool> expression = null)
         {
             AppDomain.CurrentDomain.AssemblyLoad += (sender, args) =>
             {
@@ -29,7 +29,11 @@ namespace Alav.DI.Extensions
 
             foreach (var assemply in AppDomain.CurrentDomain.GetAssemblies())
             {
-                services = services.ScanAssembly(assemply, expression);
+                try
+                {
+                    services = services.ScanAssembly(assemply, expression);
+                }
+                catch (ReflectionTypeLoadException) { }
             }
 
             return services;
@@ -43,18 +47,18 @@ namespace Alav.DI.Extensions
         /// <param name="services">Service collection</param>
         /// <param name="expression">Search expression</param>
         /// <returns>ServiceCollection</returns>
-        public static IServiceCollection Scan<T>(this IServiceCollection services, Func<Type, bool>? expression = null) => services.ScanAssembly(typeof(T).Assembly, expression);
+        public static IServiceCollection Scan<T>(this IServiceCollection services, Func<Type, bool> expression = null) => services.ScanAssembly(typeof(T).Assembly, expression);
 
-        private static IServiceCollection ScanAssembly(this IServiceCollection services, Assembly assembly, Func<Type, bool>? expression = null)
+        private static IServiceCollection ScanAssembly(this IServiceCollection services, Assembly assembly, Func<Type, bool> expression = null)
         {
-            Dictionary<Type, IEnumerable<ADIAttribute>> processedTypes = new Dictionary<Type, IEnumerable<ADIAttribute>>();
-            Action<Type, IEnumerable<ADIAttribute>> tryAddTypeAttributesAction = (type, attributes) =>
+            Dictionary<Type, IEnumerable<ADIAttribute>> processedTypes = new();
+            void tryAddTypeAttributesAction(Type type, IEnumerable<ADIAttribute> attributes)
             {
                 if (!processedTypes.ContainsKey(type))
                 {
                     processedTypes.Add(type, attributes);
                 }
-            };
+            }
 
             assembly
                 .GetTypes()

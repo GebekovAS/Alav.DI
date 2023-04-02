@@ -1,6 +1,5 @@
 ﻿using Alav.DI.Extensions;
 using Alav.DI.TestConsole.AppServices.Implementations;
-using ConsoleTest.AppServices.PingService;
 using ConsoleTest.AppServices.TestService;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
